@@ -1,0 +1,15 @@
+#!/bin/bash
+# assumes one is in the directory where Crusoe lives
+
+# generate the fake data and store in a variable
+node fakeDataGenerator.js
+fakeData=$(<generatedData.js)
+
+# navigate to Crusoe directory
+cd ..
+
+# access the production db for cruose420
+meteor mongo crusoe.meteor.com <<- _EOF_
+  db.messages.insert($fakeData);
+  exit
+_EOF_
