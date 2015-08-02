@@ -1,5 +1,5 @@
 #!/bin/bash
-# assumes one is in the directory where Crusoe lives
+# generates some messages for Crusoe
 
 # generate the fake data and store in a variable
 node fakeDataGenerator.js
@@ -14,18 +14,13 @@ result=''
       result+='db.messages.insert('$mod$');\n'
     done
 
-echo results!
+echo the fake data:
 echo $result
+
+# place commands in a file to be fed to meteor mongo
 touch meteorCommands.txt
 echo $result > meteorCommands.txt
 echo "exit" >> meteorCommands.txt
-# navigate to Crusoe directory
-cd ..
 
 # access the production db for cruose420
-# meteor mongo crusoe.meteor.com <<- _EOF_
-#   # CURRENT PROBLEM:  WANT TO INCLUDE RESULT VARIABLE IN THE HEREDOC
-#   exit
-# _EOF_
-
-meteor mongo crusoe.meteor.com<crusoe-seeder/meteorCommands.txt
+meteor mongo crusoe.meteor.com<meteorCommands.txt
