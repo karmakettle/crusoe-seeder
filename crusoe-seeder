@@ -23,4 +23,4 @@ echo $result > meteorCommands.txt
 echo "exit" >> meteorCommands.txt
 
 # access the production db for cruose420
-meteor mongo crusoe.meteor.com<meteorCommands.txt
+meteor mongo crusoe420.meteor.com<meteorCommands.txt
