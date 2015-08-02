@@ -4,12 +4,28 @@
 # generate the fake data and store in a variable
 node fakeDataGenerator.js
 fakeData=$(<generatedData.js)
+result=''
 
+# generate series of insert commands to pass to db
+  for data in $fakeData
+    do
+      # change - to space
+      mod=${data//!/ }
+      result+='db.messages.insert('$mod$');\n'
+    done
+
+echo results!
+echo $result
+touch meteorCommands.txt
+echo $result > meteorCommands.txt
+echo "exit" >> meteorCommands.txt
 # navigate to Crusoe directory
 cd ..
 
 # access the production db for cruose420
-meteor mongo crusoe.meteor.com <<- _EOF_
-  db.messages.insert($fakeData);
-  exit
-_EOF_
+# meteor mongo crusoe.meteor.com <<- _EOF_
+#   # CURRENT PROBLEM:  WANT TO INCLUDE RESULT VARIABLE IN THE HEREDOC
+#   exit
+# _EOF_
+
+meteor mongo crusoe.meteor.com<crusoe-seeder/meteorCommands.txt
